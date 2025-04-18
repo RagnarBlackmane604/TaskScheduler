@@ -154,18 +154,21 @@ fetch("https://jsonplaceholder.typicode.com/todos")
 ● Map the filtered todos to an array of task titles.
 ● Log the results. */
 
-fetch("https://jsonplaceholder.typicode.com/todos")
-    .then((response) => {
-        return response.json(); // Parse the JSON response
-    })
-    .then((data) => {
-        console.log('Data received:', data);
-        const completedTodos = data.filter(todo => todo.completed === true);
-        
-        const taskTitles = completedTodos.map(todo => todo.title);
-        
-        console.log(taskTitles); // Log the titles of completed tasks
-    })
-    .catch((error) => {
-        console.log("Error fetching data:", error); // Handle errors
-    });
+async function handleTask() {
+  try {
+    const response = await fetch("https://jsonplaceholder.typicode.com/todos");
+    const data = await response.json();
+
+    console.log("Data received:", data);
+
+    const completedTodos = data.filter(todo => todo.completed);
+    const taskTitles = completedTodos.map(todo => todo.title);
+
+    console.log("Completed Task Titles:", taskTitles);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+
+
+handleTask();
